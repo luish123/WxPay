@@ -1,0 +1,67 @@
+
+
+
+<span class="list_val  btn btn_blue sure" id="button" >确定</span>
+<script type="text/javascript">
+	//调用微信JS api 支付
+	//button的ajax请求的地址为jsapi.php  返回的带预支付账单的标示 然后使用jsdk  只能在微信浏览器中调用 不需要引用js
+	$("#button").click(function(){
+	var money_=$('#pay_').text()*100
+	
+		$.ajax({
+			type:"post",
+			data:"openid={$openid}&money="+money_+"&attach=1",
+			url:"weixinpay/example/jsapi.php",
+			dataType:"json",
+			success:function(data){
+				jsApiCall(data)
+			}
+		})
+	})
+	function jsApiCall(request)
+	{
+		WeixinJSBridge.invoke(
+				'getBrandWCPayRequest',
+request,
+		function(res){
+			if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+			window.location='http://www.leadersedu.cn/dafuhao/2/index.php?c=pay&a=index'
+			}
+			
+			
+		}
+	);
+	}
+
+	function callpay()
+	{
+		if (typeof WeixinJSBridge == "undefined"){
+			if( document.addEventListener ){
+				document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+			}else if (document.attachEvent){
+				document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+				document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+			}
+		}else{
+			jsApiCall();
+		}
+	}
+</script>
+<script type="text/javascript">
+	//获取共享地址
+
+
+	window.onload = function(){
+		if (typeof WeixinJSBridge == "undefined"){
+			if( document.addEventListener ){
+				document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+			}else if (document.attachEvent){
+				document.attachEvent('WeixinJSBridgeReady', editAddress);
+				document.attachEvent('onWeixinJSBridgeReady', editAddress);
+			}
+		}else{
+			editAddress();
+		}
+	};
+
+
