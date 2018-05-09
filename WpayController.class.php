@@ -34,7 +34,7 @@ class WpayController extends Controller
     public $parameters = [];
 	public $curl_timeout;
 	public $url;
-
+	//test
     public function __construct()
     {
         $this->url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
